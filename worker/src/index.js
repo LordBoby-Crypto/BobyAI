@@ -19,8 +19,10 @@ function json(data, status = 200, env = {}) {
 function requireAccess(request, env) {
   const expected = env.BOBYAI_ACCESS_CODE;
   if (!expected) return { ok: false, status: 500, error: "BOBYAI_ACCESS_CODE secret is not set." };
+
   const received = request.headers.get("X-BobyAI-Code") || "";
   if (received !== expected) return { ok: false, status: 401, error: "Invalid BobyAI access code." };
+
   return { ok: true };
 }
 
@@ -56,11 +58,33 @@ Return:
 5. Any warnings or next-step upgrades.`;
 }
 
+function extractOutputText(data) {
+  if (typeof data.output_text === "string" && data.output_text.trim()) {
+    return data.output_text;
+  }
+
+  if (!Array.isArray(data.output)) return "";
+
+  const chunks = [];
+
+  for (const item of data.output) {
+    if (!Array.isArray(item.content)) continue;
+
+    for (const content of item.content) {
+      if (typeof content.text === "string") chunks.push(content.text);
+      else if (typeof content.output_text === "string") chunks.push(content.output_text);
+    }
+  }
+
+  return chunks.join("\n\n").trim();
+}
+
 async function callOpenAI(body, env) {
   if (!env.OPENAI_API_KEY) {
     return {
       provider: "mock",
       message: "OPENAI_API_KEY is not set yet. Backend access works, but OpenAI is not connected.",
+      outputText: "Mock response: BobyAI backend is online, but OpenAI is not configured.",
       receivedRequest: body
     };
   }
@@ -92,10 +116,12 @@ async function callOpenAI(body, env) {
     };
   }
 
+  const outputText = extractOutputText(data);
+
   return {
     provider: "openai",
     model,
-    outputText: data.output_text || "",
+    outputText,
     raw: data
   };
 }
@@ -111,7 +137,7 @@ export default {
         return json({
           ok: true,
           app: "BobyAI Worker",
-          pass: 3,
+          pass: "3.1",
           message: "Worker is online.",
           openaiConfigured: Boolean(env.OPENAI_API_KEY),
           accessCodeConfigured: Boolean(env.BOBYAI_ACCESS_CODE)
@@ -135,7 +161,7 @@ export default {
         return json({
           ok: true,
           app: "BobyAI",
-          pass: 3,
+          pass: "3.1",
           result
         }, 200, env);
       }
