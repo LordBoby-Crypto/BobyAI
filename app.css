@@ -1,0 +1,332 @@
+:root {
+  --bg: #050711;
+  --panel: rgba(13, 18, 34, .82);
+  --panel-solid: #0d1222;
+  --text: #f8fafc;
+  --muted: #98a4b8;
+  --line: rgba(255,255,255,.11);
+  --blue: #60a5fa;
+  --green: #34d399;
+  --yellow: #fbbf24;
+  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --shadow: 0 24px 70px rgba(0,0,0,.42);
+  --radius: 28px;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background: var(--bg); }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  font: 16px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(96,165,250,.22), transparent 30rem),
+    radial-gradient(circle at 90% 14%, rgba(167,139,250,.20), transparent 32rem),
+    radial-gradient(circle at 50% 100%, rgba(34,211,238,.14), transparent 30rem),
+    var(--bg);
+  padding: max(16px, env(safe-area-inset-top)) 14px max(26px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
+}
+
+.ambient {
+  position: fixed;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(50px);
+  opacity: .35;
+  z-index: -2;
+}
+.ambient-one { left: -8rem; top: 7rem; background: var(--blue); animation: drift 12s ease-in-out infinite alternate; }
+.ambient-two { right: -10rem; bottom: 10rem; background: var(--purple); animation: drift 15s ease-in-out infinite alternate-reverse; }
+
+.scanline {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 100% 4px;
+  opacity: .18;
+  z-index: -1;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to { transform: translate3d(2.5rem,-1.5rem,0) scale(1.08); }
+}
+
+.app-shell { width: min(1100px, 100%); margin: 0 auto; }
+
+.topbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+  margin: 4px 2px 16px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+h1 {
+  margin: 4px 0 0;
+  font-size: clamp(44px, 14vw, 86px);
+  letter-spacing: -.08em;
+  line-height: .86;
+}
+
+.subtitle { color: var(--muted); margin: 12px 0 0; max-width: 46rem; }
+
+.icon-button, .icon-close {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.07);
+  color: var(--text);
+  border-radius: 18px;
+  min-width: 52px;
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+}
+
+.icon-button span {
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  display: block;
+  margin: 2px 0;
+  border-radius: 999px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+  margin-bottom: 14px;
+}
+
+.status-card, .composer-card, .output-card, .roadmap-card, .mode-tabs, dialog {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.status-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 11px;
+  align-items: center;
+  padding: 13px;
+}
+
+.status-card b { display: block; font-size: 14px; }
+.status-card small { display: block; color: var(--muted); margin-top: 2px; }
+
+.status-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  box-shadow: 0 0 22px currentColor;
+}
+.status-dot.ready { background: var(--green); color: var(--green); }
+.status-dot.waiting { background: var(--yellow); color: var(--yellow); }
+.status-dot.locked { background: var(--purple); color: var(--purple); }
+
+.mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  padding: 7px;
+  margin-bottom: 14px;
+}
+
+button, input, textarea { font: inherit; -webkit-appearance: none; appearance: none; }
+button { border: 0; cursor: pointer; user-select: none; }
+button:active { transform: scale(.985); }
+
+.mode-tab {
+  min-height: 48px;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 900;
+}
+.mode-tab.active {
+  color: #06111f;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  gap: 14px;
+}
+
+.composer-card, .output-card, .roadmap-card { padding: 16px; }
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 13px;
+}
+
+h2 { margin: 0; font-size: 24px; letter-spacing: -.04em; }
+.card-head p { color: var(--muted); margin: 5px 0 0; font-size: 14px; }
+
+.pill {
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 900;
+  color: #08111f;
+  background: linear-gradient(135deg, var(--yellow), var(--green));
+  padding: 7px 10px;
+  border-radius: 999px;
+}
+
+label {
+  display: block;
+  margin: 12px 0 7px;
+  color: var(--muted);
+  font-weight: 850;
+  font-size: 13px;
+}
+
+input, textarea {
+  width: 100%;
+  color: var(--text);
+  background: rgba(255,255,255,.075);
+  border: 1px solid transparent;
+  outline: none;
+  border-radius: 18px;
+  padding: 14px;
+}
+
+input { min-height: 52px; }
+textarea { min-height: 180px; resize: vertical; }
+
+input:focus, textarea:focus {
+  border-color: rgba(96,165,250,.85);
+  background: rgba(255,255,255,.105);
+}
+
+.builder-options { display: grid; gap: 8px; margin: 12px 0; }
+
+.option-row {
+  margin: 0;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.055);
+  border-radius: 16px;
+  color: var(--text);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.option-row input {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  border-radius: 7px;
+  padding: 0;
+}
+.option-row input:checked { background: linear-gradient(135deg, var(--green), var(--blue)); }
+
+.action-row, .output-actions { display: flex; gap: 10px; margin-top: 12px; }
+
+.primary-button, .secondary-button, .small-button {
+  min-height: 52px;
+  padding: 12px 15px;
+  border-radius: 18px;
+  font-weight: 950;
+  color: var(--text);
+}
+
+.primary-button {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  flex: 1;
+}
+
+.secondary-button, .small-button {
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--line);
+}
+.small-button { min-height: 40px; color: var(--muted); }
+
+.fine-print { color: var(--muted); font-size: 13px; margin: 12px 0 0; }
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #dbeafe;
+  background: rgba(0,0,0,.28);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 14px;
+  min-height: 430px;
+  max-height: 580px;
+  overflow: auto;
+  font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.output-actions button { flex: 1; }
+.roadmap-card { margin-top: 14px; }
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 9px;
+}
+
+.pipeline-step {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.055);
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.pipeline-step b { display: block; font-size: 15px; }
+.pipeline-step span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+.pipeline-step.done { border-color: rgba(52,211,153,.5); }
+.pipeline-step.current { background: linear-gradient(135deg, rgba(96,165,250,.25), rgba(167,139,250,.24)); border-color: rgba(96,165,250,.55); }
+
+dialog {
+  width: min(92vw, 540px);
+  color: var(--text);
+  background: var(--panel-solid);
+  padding: 16px;
+}
+dialog::backdrop { background: rgba(0,0,0,.65); backdrop-filter: blur(6px); }
+
+.dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.icon-close { font-size: 30px; line-height: 1; }
+
+@media (max-width: 820px) {
+  .status-grid, .workspace, .pipeline { grid-template-columns: 1fr; }
+  .mode-tabs { grid-template-columns: repeat(2, 1fr); }
+  .mode-tab:last-child { grid-column: 1 / -1; }
+  .card-head, .action-row, .output-actions { flex-direction: column; }
+  .primary-button, .secondary-button, .small-button { width: 100%; }
+  pre { min-height: 300px; }
+}
