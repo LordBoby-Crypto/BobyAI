@@ -21,41 +21,21 @@
       <section>
         <div class="eyebrow">Private Builder System</div>
         <h1>BobyAI</h1>
-        <p class="subtitle">Your private AI builder for apps, websites, scripts, games, GitHub Pages projects, and downloadable ZIP projects.</p>
+        <p class="subtitle">Private AI builder for websites, apps, scripts, games, GitHub Pages projects, and downloadable ZIP projects.</p>
       </section>
-
-      <button id="settingsBtn" class="icon-button" aria-label="Settings">
-        <span></span><span></span><span></span>
-      </button>
+      <button id="settingsBtn" class="icon-button" aria-label="Settings"><span></span><span></span><span></span></button>
     </header>
 
-    <section class="status-grid" aria-label="System status">
+    <section class="status-grid">
       <article class="status-card">
-        <span class="status-dot waiting"></span>
-        <div>
-          <b id="backendStatus">Backend not connected</b>
-          <small>Cloudflare Worker comes in Pass 3</small>
-        </div>
+        <span id="backendDot" class="status-dot waiting"></span>
+        <div><b id="backendStatus">Backend not connected</b><small id="backendSub">Add Worker URL in settings</small></div>
       </article>
-
-      <article class="status-card">
-        <span class="status-dot ready"></span>
-        <div>
-          <b>GitHub Pages ready</b>
-          <small>Upload these files to BobyAI</small>
-        </div>
-      </article>
-
-      <article class="status-card">
-        <span class="status-dot locked"></span>
-        <div>
-          <b>Private mode</b>
-          <small>Access code support planned</small>
-        </div>
-      </article>
+      <article class="status-card"><span class="status-dot ready"></span><div><b>GitHub Pages ready</b><small>Frontend runs from BobyAI repo</small></div></article>
+      <article class="status-card"><span class="status-dot locked"></span><div><b>Private mode</b><small>Access code checked by Worker</small></div></article>
     </section>
 
-    <nav class="mode-tabs" aria-label="Builder modes">
+    <nav class="mode-tabs">
       <button class="mode-tab active" data-mode="website">Website</button>
       <button class="mode-tab" data-mode="app">App</button>
       <button class="mode-tab" data-mode="script">Script</button>
@@ -80,59 +60,40 @@
         <textarea id="promptInput" placeholder="Example: Build a premium mobile landing page for a pressure washing business with pricing cards, contact section, and dark blue design."></textarea>
 
         <section class="builder-options">
-          <label class="option-row">
-            <input id="includeReadme" type="checkbox" checked />
-            <span>Include README</span>
-          </label>
-          <label class="option-row">
-            <input id="mobileFirst" type="checkbox" checked />
-            <span>Mobile-first design</span>
-          </label>
-          <label class="option-row">
-            <input id="darkMode" type="checkbox" checked />
-            <span>Premium dark UI</span>
-          </label>
+          <label class="option-row"><input id="includeReadme" type="checkbox" checked /><span>Include README</span></label>
+          <label class="option-row"><input id="mobileFirst" type="checkbox" checked /><span>Mobile-first design</span></label>
+          <label class="option-row"><input id="darkMode" type="checkbox" checked /><span>Premium dark UI</span></label>
         </section>
 
         <div class="action-row">
-          <button id="generateBtn" class="primary-button">Generate Project Prompt</button>
+          <button id="generateBtn" class="primary-button">Send to BobyAI Backend</button>
+          <button id="previewBtn" class="secondary-button">Preview Request</button>
           <button id="clearBtn" class="secondary-button">Clear</button>
         </div>
 
-        <p class="fine-print">Pass 2 creates the BobyAI app shell. Pass 3 adds the secure AI backend. For now, this generates the structured build request BobyAI will send to the backend later.</p>
+        <p class="fine-print">Pass 3 adds the backend. The backend can verify access, call OpenAI, and return the generated response. File splitting and ZIP creation come next.</p>
       </article>
 
       <aside class="output-card">
         <div class="card-head">
-          <div>
-            <h2>Build Request</h2>
-            <p>Preview of what BobyAI will send to the AI backend.</p>
-          </div>
+          <div><h2>Output</h2><p>Backend response or build request preview.</p></div>
           <button id="copyBtn" class="small-button">Copy</button>
         </div>
-
-        <pre id="outputBox">Choose a mode, describe a project, then tap Generate Project Prompt.</pre>
-
+        <pre id="outputBox">Add your Cloudflare Worker URL and access code in Settings, then test the backend.</pre>
         <div class="output-actions">
-          <button id="downloadPromptBtn" class="secondary-button">Download Prompt</button>
-          <button id="fakeZipBtn" class="secondary-button">ZIP Placeholder</button>
+          <button id="testBackendBtn" class="secondary-button">Test Backend</button>
+          <button id="downloadOutputBtn" class="secondary-button">Download Output</button>
         </div>
       </aside>
     </section>
 
     <section class="roadmap-card">
-      <div class="card-head">
-        <div>
-          <h2>Build Pipeline</h2>
-          <p>BobyAI will be built in passes so it becomes more powerful without breaking.</p>
-        </div>
-      </div>
-
+      <div class="card-head"><div><h2>Build Pipeline</h2><p>BobyAI is being built in passes.</p></div></div>
       <div class="pipeline">
         <div class="pipeline-step done"><b>Pass 1</b><span>Architecture</span></div>
-        <div class="pipeline-step current"><b>Pass 2</b><span>Frontend shell</span></div>
-        <div class="pipeline-step"><b>Pass 3</b><span>Cloudflare backend</span></div>
-        <div class="pipeline-step"><b>Pass 4</b><span>AI connection</span></div>
+        <div class="pipeline-step done"><b>Pass 2</b><span>Frontend shell</span></div>
+        <div class="pipeline-step current"><b>Pass 3</b><span>Cloudflare backend</span></div>
+        <div class="pipeline-step"><b>Pass 4</b><span>AI output parser</span></div>
         <div class="pipeline-step"><b>Pass 5+</b><span>Files, ZIPs, GitHub, search</span></div>
       </div>
     </section>
@@ -143,19 +104,15 @@
       <h2>BobyAI Settings</h2>
       <button id="closeSettingsBtn" class="icon-close" aria-label="Close">×</button>
     </div>
-
-    <label for="apiEndpoint">Backend endpoint</label>
-    <input id="apiEndpoint" placeholder="Example: https://bobyai-worker.yourname.workers.dev" />
-
+    <label for="apiEndpoint">Cloudflare Worker backend endpoint</label>
+    <input id="apiEndpoint" placeholder="https://bobyai-api.yourname.workers.dev" />
     <label for="accessCode">Private access code</label>
-    <input id="accessCode" type="password" placeholder="Set later in Cloudflare Worker" />
-
+    <input id="accessCode" type="password" placeholder="Same code you set in Cloudflare secret" />
     <div class="action-row">
       <button id="saveSettingsBtn" class="primary-button">Save Settings</button>
       <button id="resetSettingsBtn" class="secondary-button">Reset</button>
     </div>
-
-    <p class="fine-print">These settings are saved only on this device. Do not put OpenAI or GitHub API keys in this app. Those belong in the backend only.</p>
+    <p class="fine-print">Never put your OpenAI API key in this frontend. The Worker stores secrets privately.</p>
   </dialog>
 
   <script src="./app.js"></script>

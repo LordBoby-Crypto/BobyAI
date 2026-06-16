@@ -1,7 +1,7 @@
 {
   "name": "BobyAI",
   "short_name": "BobyAI",
-  "description": "Private AI builder app shell for creating websites, apps, scripts, games, and downloadable projects.",
+  "description": "Private AI builder app shell.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#050711",

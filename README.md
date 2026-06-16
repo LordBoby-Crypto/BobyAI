@@ -1,38 +1,32 @@
 # BobyAI
 
-BobyAI is a private AI builder platform designed to generate applications, websites, scripts, games, GitHub Pages projects, and downloadable ZIP projects.
+BobyAI is a private AI builder platform.
 
-## Pass 2 status
+## Pass 3 status
 
-This repo currently contains the BobyAI frontend shell.
+Pass 3 adds the Cloudflare Worker backend.
 
-Files:
-
+Frontend:
 - `index.html`
 - `app.css`
 - `app.js`
 - `manifest.json`
-- `docs/ROADMAP.md`
-- `docs/SECURITY.md`
-- `docs/PASSES.md`
 
-This version is ready to host on GitHub Pages, but it does not connect to OpenAI yet. The secure backend comes in Pass 3.
+Backend:
+- `worker/src/index.js`
+- `worker/wrangler.toml`
+- `worker/package.json`
 
-## Hosting on GitHub Pages
+## Deploy frontend
 
-1. Create a GitHub repo named `BobyAI`.
-2. Upload these files to the root of the repo.
-3. Go to **Settings > Pages**.
-4. Choose **Deploy from a branch**.
-5. Select `main` and `/ root`.
-6. Open:
+Upload the root frontend files to GitHub Pages.
+
+Expected URL:
 
 ```text
 https://lordboby-crypto.github.io/BobyAI/
 ```
 
-## Security note
+## Deploy backend
 
-Do not put OpenAI API keys, GitHub tokens, or private secrets into `index.html`, `app.css`, or `app.js`.
-
-Secrets will be stored in the backend later.
+See `docs/CLOUDFLARE_SETUP.md`.
