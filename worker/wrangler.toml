@@ -1,0 +1,9 @@
+name = "bobyai-api"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+[vars]
+# For development only. Do not put secrets here.
+# ALLOWED_ORIGIN can be your GitHub Pages URL after deployment.
+ALLOWED_ORIGIN = "*"
+OPENAI_MODEL = "gpt-5-mini"

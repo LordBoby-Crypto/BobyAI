@@ -1,0 +1,15 @@
+{
+  "name": "bobyai-worker",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret:openai": "wrangler secret put OPENAI_API_KEY",
+    "secret:code": "wrangler secret put BOBYAI_ACCESS_CODE"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
